@@ -28,7 +28,9 @@ class Vertex():
 			return "v" + str(Vertex.current_label - 96)
 
 	def connect_to_vertex(self, vert, edge):
-		pass
+		self.adj_vertices[vert.label] = vert
+		self.incd_edges[edge.label] = edge
+		self.degree += 1
 
 	def has_edge_with(self, vert):
 		pass
@@ -90,14 +92,15 @@ class Graph():
 	def __str__(self):
 		return "Graph " + self.name
 
-	def get_name(self):
-		pass
-
 	def add_vertex(self, x, y, label=None):
-		pass
+		v = Vertex(self, x, y, label)
+		self.verts[v.label] = v
+		return v
 	
 	def add_edge(self, vert_1, vert_2, label=None):
-		pass
+		e = Edge(self, vert_1, vert_2, label)
+		self.edges[e.label] = e
+		return e
 
 	def get_vertex(self, label):
 		pass
