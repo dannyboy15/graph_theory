@@ -17,7 +17,7 @@ class Vertex():
 			self.label = label
 
 	def __str__(self):
-		pass
+		return "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
 
 	def auto_gen_label(self, method="vtx"):
 		pass
@@ -47,7 +47,7 @@ class Edge():
 		vert_2.connect_to_vertex(vert_1, self)
 
 	def __str__(self):
-		pass
+		return "Edge: '{}' with vertices ({}, {}) in Graph '{}'".format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
 
 	def auto_gen_label(self, method="edg"):
 		pass
@@ -76,6 +76,9 @@ class Graph():
 			Graph.graph_count += 1
 		else:
 			self.name = name
+
+	def __str__(self):
+		return "Graph " + self.name
 
 	def get_name(self):
 		pass
