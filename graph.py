@@ -20,7 +20,12 @@ class Vertex():
 		return "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
 
 	def auto_gen_label(self, method="vtx"):
-		pass
+		if method == "abc":
+			Vertex.current_label += 1
+			return chr(Vertex.current_label)
+		elif method == "vtx":	
+			Vertex.current_label += 1
+			return "v" + str(Vertex.current_label - 96)
 
 	def connect_to_vertex(self, vert, edge):
 		pass
@@ -50,7 +55,12 @@ class Edge():
 		return "Edge: '{}' with vertices ({}, {}) in Graph '{}'".format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
 
 	def auto_gen_label(self, method="edg"):
-		pass
+		if method == "123":
+			Edge.current_label += 1
+			return str(Edge.current_label)
+		if method == "edg":	
+			Edge.current_label += 1
+			return "e" + str(Edge.current_label)
 
 	def are_verts(self, vert_1, vert_2):
 		pass
