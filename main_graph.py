@@ -1,7 +1,6 @@
 from graph import *
 
-def main():
-	
+def test_1():
 # From first example in class
 # G = (V, E)
 # V = {v1, v2, v3, v4}
@@ -19,41 +18,81 @@ def main():
 
 	print G
 
-	print "\nIs digraph?"
+	# Expected answer: True
+	print "\nIs graph G a digraph?"
 	print G.is_directed()
 
+	# Expected answer: True
 	print "\nIs v1 adjacent to v2?"
 	print v1.is_adjacent_to(v2)
 
+	# Expected answer: False
+	print "\nIs v1 adjacent to v3?"
+	print v1.is_adjacent_to(v3)
 
-	# g = Graph()
-	# # print g.name
-	# v1 = Vertex(g,1,2)
-	# v2 = Vertex(g,1,2)
-	# # v3 = Vertex(g,1,2)
-	# v3 = g.add_vertex(1,1)
-	# # v2 = g.add_vertex(2,2)
-	# e1 = g.add_edge(v1, v2)
-	# v_1 = g.get_vertex("v1")
-	# e_1 = g.get_edge("e1")
-	# e_2 = g.add_edge(Vertex(g,9,9),Vertex(g,-9,-9))
-	# # print g.verts
-	# print v3
-	# print e_2
-	# g.is_directed()
-	# print v2
-	# print e1
+	# Expected answer: True and True
+	# 	Second function tests them together
+	# 	Expected answer: True
+	print "\nIs e1 incident on v1 and v2?"
+	print str( e1.is_incident_on(v1) ) + " and " + str( e1.is_incident_on(v2) )
+	# print e1.is_incident_on(v1, v2)
 
-	# print v_1
-	# print e_1
+	# Expected answer: False
+	print "\nIs e1 incident on v2 and v3?"
+	print e1.is_incident_on(v2, v3)
 
-	# print "\nPrinting Graph:"
-	# print g
+	# Expected answer: True and True
+	print "\nIs v1 incident on e1 and e2?"
+	print str( v1.is_incident_on(e1) ) + " and " + str( v1.is_incident_on(e2) )
+
+	# Expected answer: False
+	print "\nIs v1 incident on e3?"
+	print v1.is_incident_on(e3)
+
+	# Expected answer: True
+	print "\nIs v4 isolated?"
+	print v4.is_isolated()
+
+	# Expected answer: False
+	print "\nIs v1 isolated?"
+	print v1.is_isolated()
+
+
+def test_x():
+	g = Graph()
+	# print g.name
+	v1 = Vertex(g,1,2)
+	v2 = Vertex(g,1,2)
+	# v3 = Vertex(g,1,2)
+	v3 = g.add_vertex(1,1)
+	# v2 = g.add_vertex(2,2)
+	e1 = g.add_edge(v1, v2)
+	v_1 = g.get_vertex("v1")
+	e_1 = g.get_edge("e1")
+	e_2 = g.add_edge(Vertex(g,9,9),Vertex(g,-9,-9))
 	# print g.verts
-	# for v in g.verts:
-	# 	print g.verts[v].graph
-	# for v, v1 in g.verts.items():
-	# 	print v1.graph
+	print v3
+	print e_2
+	g.is_directed()
+	print v2
+	print e1
+
+	print v_1
+	print e_1
+
+	print "\nPrinting Graph:"
+	print g
+	print g.verts
+	for v in g.verts:
+		print g.verts[v].graph
+	for v, v1 in g.verts.items():
+		print v1.graph
+
+
+def main():
+	test_1()
+	# test_x()
+
 
 if __name__ == '__main__':
 	main()
