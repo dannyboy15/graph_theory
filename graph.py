@@ -43,7 +43,7 @@ class Vertex():
 		return self.adj_vertices.has_key(vert.label)
 
 	def is_incident_on(self, edge):
-		return edge in self.incd_edges
+		return self.incd_edges.has_key(edge.label)
 
 	def is_isolated(self):
 		return self.incd_edges == {}
@@ -78,8 +78,10 @@ class Edge():
 			Edge.auto_label += 1
 			return "e" + str(Edge.auto_label)
 
-	def has_verts(self, vert_1, vert_2):
-		pass
+	def is_incident_on(self, vert_1, vert_2=None):
+		if vert_2 is not None:
+			return vert_1 in self.verts and vert_2 in self.verts
+		return vert_1 in self.verts
 
 	def has_loop(self):
 		pass
@@ -116,14 +118,12 @@ class Graph():
 		# TODO: Handle adding vert versus creating vert
 		if vert is not None:
 			self.verts[vert.label] = vert
-			print vert.label
 			return vert
 		return Vertex(self, x, y, label)
 	
 	def add_edge(self, vert_1, vert_2, label=None, edge=None, dirn=False):
 		if edge is not None:
 			self.edges[edge.label] = edge
-			print edge.label
 			return edge
 		return Edge(self, vert_1, vert_2, dirn=dirn, label=label)
 
@@ -138,7 +138,6 @@ class Graph():
 
 	def is_directed(self):
 		for k, e in self.edges.items():
-			# print e.dirn
 			if e.dirn:
 				return True
 		return False
