@@ -39,15 +39,25 @@ class Vertex():
 	def has_edge_with(self, vert):
 		pass
 
+	def is_adjacent_to(self, vert):
+		return vert in self.adj_vertices
+
+	def is_incident_on(self, edge):
+		return edge in self.incd_edges
+
+	def is_isolated(self):
+		return self.incd_edges == {}
+
 
 class Edge():
 	auto_label = 0
 
-	def __init__(self, graph, vert_1, vert_2, label=None, weight=0):
+	def __init__(self, graph, vert_1, vert_2, dir=False, label=None, weight=0):
 		self.graph = graph
 		self.vert_1 = vert_1
 		self.vert_2 = vert_2
-		self.verts = (vert_1, vert_2);
+		self.verts = (vert_1, vert_2)
+		self.dir = dir
 		if label is None:
 			self.label = self.auto_gen_label()
 		else:
@@ -74,6 +84,9 @@ class Edge():
 	def has_loop(self):
 		pass
 
+	def has_parallel(self):
+		pass
+
 
 class Graph():
 	graph_count = 0
@@ -94,8 +107,8 @@ class Graph():
 			self.name = name
 
 	def __str__(self):
-		s =  "Graph     : " + self.name + "\n"
-		s += "Vertex set: " + str([v for v in self.verts]) + "\n"
+		s =  "Graph     : " + self.name + " with\n"
+		s += "Vertex set: " + str([v for v in self.verts]) + " and \n"
 		s += "Edges set : " + str([e for e in self.edges])
 		return s 
 
@@ -112,7 +125,7 @@ class Graph():
 			self.edges[edge.label] = edge
 			print edge.label
 			return edge
-		return Edge(self, vert_1, vert_2, label)
+		return Edge(self, vert_1, vert_2, label=label)
 
 	def get_vertex(self, label):
 		return self.verts[label]
@@ -123,6 +136,20 @@ class Graph():
 	def num_loops(self):
 		pass
 
+	def is_directed(self):
+		for k, e in self.edges.items():
+			print e.dir
+			if e.dir:
+				return True
+		return False
+
+	def has_parallel():
+		pass
+
+	# A simple graph is a graph with no loops or parallel edges
+	def is_simple(self):
+		return not has_parallel and num_loops == 0
+	
 	def is_path(self, path):
 		pass
 	
