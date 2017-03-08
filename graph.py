@@ -40,7 +40,7 @@ class Vertex():
 		pass
 
 	def is_adjacent_to(self, vert):
-		return vert in self.adj_vertices
+		return self.adj_vertices.has_key(vert.label)
 
 	def is_incident_on(self, edge):
 		return edge in self.incd_edges
@@ -52,12 +52,12 @@ class Vertex():
 class Edge():
 	auto_label = 0
 
-	def __init__(self, graph, vert_1, vert_2, dir=False, label=None, weight=0):
+	def __init__(self, graph, vert_1, vert_2, dirn=False, label=None, weight=0):
 		self.graph = graph
 		self.vert_1 = vert_1
 		self.vert_2 = vert_2
 		self.verts = (vert_1, vert_2)
-		self.dir = dir
+		self.dirn = dirn
 		if label is None:
 			self.label = self.auto_gen_label()
 		else:
@@ -107,9 +107,9 @@ class Graph():
 			self.name = name
 
 	def __str__(self):
-		s =  "Graph     : " + self.name + " with\n"
-		s += "Vertex set: " + str([v for v in self.verts]) + " and \n"
-		s += "Edges set : " + str([e for e in self.edges])
+		s =  "     Graph: " + self.name + "(V, E) with\n"
+		s += "Vertex set: V = " + str([v for v in self.verts]) + "\n"
+		s += " Edges set: E = " + str([e for e in self.edges])
 		return s 
 
 	def add_vertex(self, x, y, label=None, vert=None):
@@ -120,12 +120,12 @@ class Graph():
 			return vert
 		return Vertex(self, x, y, label)
 	
-	def add_edge(self, vert_1, vert_2, label=None, edge=None):
+	def add_edge(self, vert_1, vert_2, label=None, edge=None, dirn=False):
 		if edge is not None:
 			self.edges[edge.label] = edge
 			print edge.label
 			return edge
-		return Edge(self, vert_1, vert_2, label=label)
+		return Edge(self, vert_1, vert_2, dirn=dirn, label=label)
 
 	def get_vertex(self, label):
 		return self.verts[label]
@@ -138,8 +138,8 @@ class Graph():
 
 	def is_directed(self):
 		for k, e in self.edges.items():
-			print e.dir
-			if e.dir:
+			# print e.dirn
+			if e.dirn:
 				return True
 		return False
 
