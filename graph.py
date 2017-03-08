@@ -15,6 +15,7 @@ class Vertex():
 			self.label = self.auto_gen_label()
 		else:
 			self.label = label
+		self.graph.add_vertex(-1, -1, vert=self)
 
 	def __str__(self):
 		return "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
@@ -54,7 +55,7 @@ class Edge():
 		vert_2.connect_to_vertex(vert_1, self)
 
 	def __str__(self):
-		return "Edge: '{}' with vertices ({}, {}) in Graph '{}'".format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
+		return "Edge  : '{}' with vertices ({}, {}) in Graph '{}'".format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
 
 	def auto_gen_label(self, method="edg"):
 		if method == "123":
@@ -90,10 +91,22 @@ class Graph():
 			self.name = name
 
 	def __str__(self):
-		return "Graph " + self.name
+		s =  "Graph     : " + self.name + "\n"
+		s += "Vertex set: " + str([v for v in self.verts]) + "\n"
+		s += "Edges set : " + str([e for e in self.edges])
+		return s 
 
-	def add_vertex(self, x, y, label=None):
+	def add_vertex(self, x, y, label=None, vert=None):
+		# TODO: Handle adding vert versus creating vert
+		if vert is not None:
+			print "Not none"
+			print vert
+			print vert.label
+			self.verts[vert.label] = vert
+			return vert
+		print "me first"
 		v = Vertex(self, x, y, label)
+		print "********* Do I ever get printed????"
 		self.verts[v.label] = v
 		return v
 	
@@ -103,10 +116,10 @@ class Graph():
 		return e
 
 	def get_vertex(self, label):
-		pass
+		return self.verts[label]
 	
 	def get_edge(self, label):
-		pass
+		return self.edges[label]
 
 	def num_loops(self):
 		pass
