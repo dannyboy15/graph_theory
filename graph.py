@@ -36,8 +36,7 @@ class Vertex():
 		self.incd_edges[edge.label] = edge
 		self.degree += 1
 
-	def has_edge_with(self, vert):
-		pass
+	# Usable functions
 
 	def is_adjacent_to(self, vert):
 		return self.adj_vertices.has_key(vert.label)
@@ -48,6 +47,12 @@ class Vertex():
 	def is_isolated(self):
 		return self.incd_edges == {}
 
+	def has_loop(self):
+		for label, edge in self.incd_edges.items():
+			if edge.is_loop:
+				return True
+		return False
+
 
 class Edge():
 	auto_label = 0
@@ -55,8 +60,8 @@ class Edge():
 	def __init__(self, graph, vert_1, vert_2, dirn=False, label=None, weight=0):
 		self.graph = graph
 		self.vert_1 = vert_1
-		self.vert_2 = vert_2
-		self.verts = (vert_1, vert_2)
+		self.vert_2 = vert_2				# Need to decide whether to use 2
+		self.verts = (vert_1, vert_2)		#  vert instances or a tuple
 		self.dirn = dirn
 		if label is None:
 			self.label = self.auto_gen_label()
@@ -78,16 +83,18 @@ class Edge():
 			Edge.auto_label += 1
 			return "e" + str(Edge.auto_label)
 
+	# Usable functions
+
 	def is_incident_on(self, vert_1, vert_2=None):
 		if vert_2 is not None:
 			return vert_1 in self.verts and vert_2 in self.verts
 		return vert_1 in self.verts
 
-	def has_loop(self):
-		pass
+	def is_loop(self):
+		return self.vert_1 is self.vert_2
 
-	def has_parallel(self):
-		pass
+	def is_parallel_to(self, edge):
+		return sorted(self.verts) == sorted(edge.verts)
 
 
 class Graph():
@@ -156,6 +163,9 @@ class Graph():
 		pass
 
 	def is_cycle(self, path):
+		pass
+
+	def is_bipartite():
 		pass
 
 	def print_adj_mtx():
