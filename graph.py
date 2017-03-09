@@ -141,20 +141,45 @@ class Graph():
 		return self.edges[label]
 
 	def num_loops(self):
-		pass
+		loops = 0
+		for label, edge in self.edges.items():
+			if edge.is_loop:
+				loops += 1
+		return loops
 
 	def is_directed(self):
-		for k, e in self.edges.items():
-			if e.dirn:
+		for label, edge in self.edges.items():
+			if edge.dirn:
 				return True
 		return False
 
-	def has_parallel():
-		pass
+	def has_parallel_edges(self):
+		# TODO: Implement this
+		# 	Check 1st item w/ whole list
+		# 	move to next item an check w/
+		# 	rest of list
+
+		edge_list = self.edges.values()
+		# for e in edge_list:
+		# 	print e.label
+		n = len(edge_list) - 1
+		count = 1
+		for i in range(n):
+			for j in range(n - count + 1):
+				# print str(i) + " " + str(j + i + 1)
+				# print str(count) + ": " + edge_list[i].label + " => " + edge_list[j+ i + 1].label
+				if edge_list[i].is_parallel_to(edge_list[i + j + 1]):
+					return True
+			count += 1
+		# for label, edge in self.edges.items():
+		# 	for label
+		# 	if edge.:
+		# 		return True
+		return False
 
 	# A simple graph is a graph with no loops or parallel edges
-	def is_simple(self):
-		return not has_parallel and num_loops == 0
+	def is_simple_graph(self):
+		return not self.has_parallel_edges() and self.num_loops() == 0
 	
 	def is_path(self, path):
 		pass
