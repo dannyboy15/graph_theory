@@ -57,6 +57,22 @@ def test_1():
 	print "\nIs v1 isolated?"
 	print v1.is_isolated()
 
+	# Expected answer: True
+	print "\nIs e4 a loop?"
+	print e4.is_loop()
+
+	# Expected answer: False
+	print "\nIs e3 a loop?"
+	print e3.is_loop()
+
+	# Expected answer: True
+	print "\nAre e1 and e2 parallel edges?"
+	print e1.is_parallel_to(e2)
+
+	# Expected answer: False
+	print "\nAre e1 and e3 parallel edges?"
+	print e1.is_parallel_to(e3)
+
 
 def test_x():
 	g = Graph()
