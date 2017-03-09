@@ -15,12 +15,18 @@ def test_1():
 	e2 = G.add_edge(v2, v1, dirn=True, label="e2")
 	e3 = G.add_edge(v2, v3, dirn=True, label="e3")
 	e4 = G.add_edge(v3, v3, dirn=True, label="e4")
+	# e5 = G.add_edge(v3, v3, dirn=True, label="e5")
 
+	# G.has_parallel_edges()
 	print G
 
 	# Expected answer: True
 	print "\nIs graph G a digraph?"
 	print G.is_directed()
+
+	# Expected answer: False
+	print "\nIs graph G a simple graph?"
+	print G.is_simple_graph()
 
 	# Expected answer: True
 	print "\nIs v1 adjacent to v2?"
@@ -106,6 +112,9 @@ def test_x():
 
 
 def main():
+	# for i in range(5):
+	# 	print i
+
 	test_1()
 	# test_x()
 
