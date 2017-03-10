@@ -79,6 +79,30 @@ def test_1():
 	print "\nAre e1 and e3 parallel edges?"
 	print e1.is_parallel_to(e3)
 
+def test_2():
+	G = Graph(name="G")
+	v1 = G.add_vertex(1,1,label="v1")
+	v2 = G.add_vertex(1,2,label="v2")
+	v3 = G.add_vertex(2,2,label="v3")
+	v4 = G.add_vertex(2,1,label="v4")
+	e1 = G.add_edge(v1, v2, dirn=True, label="e1")
+	e2 = G.add_edge(v2, v1, dirn=True, label="e2")
+	e3 = G.add_edge(v2, v3, dirn=True, label="e3")
+	e4 = G.add_edge(v3, v3, dirn=True, label="e4")
+	e5 = G.add_edge(v3, v3, dirn=True, label="e5")
+
+	# Expected answer: True
+	print "Is (v1, v2, v3) a path in G"
+	print G.is_path((v1, v2, v3))
+
+	# Expected answer: False
+	print "\nIs (v1, v2, v3, v4) a path in G"
+	print G.is_path((v1, v2, v3, v4))
+
+	# Expected answer: True
+	print "\nIs (v1, v2, v3, v2, v1) a path in G"
+	print G.is_path((v1, v2, v3, v2, v1))
+
 
 def test_x():
 	g = Graph()
@@ -115,7 +139,8 @@ def main():
 	# for i in range(5):
 	# 	print i
 
-	test_1()
+	# test_1()
+	test_2()	# Path test
 	# test_x()
 
 
