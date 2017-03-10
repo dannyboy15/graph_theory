@@ -182,7 +182,10 @@ class Graph():
 		return not self.has_parallel_edges() and self.num_loops() == 0
 	
 	def is_path(self, path):
-		pass
+		for i in range(len(path) - 1):
+			if not path[i].is_adjacent_to(path[i + 1]):
+				return False
+		return True
 	
 	def is_simple_cycle(self, path):
 		pass
