@@ -23,6 +23,9 @@ class Vertex():
 	def __str__(self):
 		return "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
 
+	# def __repr__(self):
+	# 	return self.label # "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
+
 	def auto_gen_label(self, method="vtx"):
 		if method == "abc":
 			Vertex.auto_label += 1
@@ -193,8 +196,128 @@ class Graph():
 	def is_cycle(self, path):
 		pass
 
-	def is_bipartite():
-		pass
+	def is_bipartite(self):
+		V1 = []
+		V2 = []
+		vrts = list(self.verts.values())
+		vrts_len = len(vrts)		# Original length of vrts
+		tmp_v = []
+
+		tmp_1 = []
+		tmp_2 = []
+
+
+		l = 1
+		
+
+		tmp_cnt = 1
+		# raw_input( "vrts: {}".format(vrts) )
+
+		while len(vrts) > 0:
+			v0 = vrts.pop(0)
+
+			# raw_input( "{} v0: {}".format(tmp_cnt, v0) )
+
+			# Add the first vertex to V1
+			V1.append(v0)
+
+			# Add all of its vertices to V2
+			tmp_v = list(v0.adj_vertices.values())
+			for i in range( len(tmp_v) ):
+				V2.append(tmp_v[i])
+				tmp_2.append( (tmp_v[i], v0) )
+
+			l = 2
+
+			tmp_cnt_2 = 1
+			while True:
+				if l is 1:
+
+					# raw_input( "l is 1 {} tmp_1: {}".format(tmp_cnt_2, tmp_1) )
+
+					# Cycle through tmp_1
+					while len(tmp_1) > 0:
+						v = tmp_1.pop(0)
+
+						# raw_input( "{} v: {}".format(tmp_cnt_2, v) )
+
+						# raw_input( "{} tmp_v: {}".format(tmp_cnt_2, tmp_v) )
+
+						tmp_v = list(v[0].adj_vertices.values())
+						for i in range( len(tmp_v) ):
+							if tmp_v[i] is not v[1]:
+								if tmp_v[i] not in V2:
+									V2.append(tmp_v[i])
+								tmp_2.append( (tmp_v[i], v) )
+								
+								# raw_input( "{} will attempt to remove: {} from {}".format(tmp_cnt_2, tmp_v[i], vrts) )
+								if tmp_v[i] in vrts:
+									vrts.remove( tmp_v[i] )
+					l = 2
+
+					# raw_input("break")
+					break
+
+				elif l is 2:
+
+					# raw_input( "l is 2 {} tmp_2: {}".format(tmp_cnt_2, tmp_2) )
+
+					# Cycle throught tmp_2
+					while len(tmp_2) > 0:
+						v = tmp_2.pop(0)
+
+						# raw_input( "{} v: {}".format(tmp_cnt_2, v) )
+
+						tmp_v = list(v[0].adj_vertices.values())
+
+						# raw_input( "{} tmp_v: {}".format(tmp_cnt_2, tmp_v) )
+
+						for i in range( len(tmp_v) ):
+							if tmp_v[i] is not v[1]:
+								if tmp_v[i] not in V1:
+									V1.append(tmp_v[i])
+								tmp_1.append( (tmp_v[i], v) )
+
+								# raw_input( "{} will attempt to remove: {} from {}".format(tmp_cnt_2, tmp_v[i], vrts) )
+								if tmp_v[i] in vrts:
+									vrts.remove(tmp_v[i])
+					l = 1
+
+				tmp_cnt_2 += 1
+			tmp_cnt += 1
+
+
+		
+		# # If they're already there return false
+		# curr_vtx = vrts[0]
+		# tmp_1 = []
+		# tmp_2 = curr_vtx.adj_vertices.values()
+		# for i in range( len(tmp_2) ):
+		# 	if tmp_2[i] not in V2:
+		# 		tmp_2.append(tmp_1[i])
+		# 		V2.append(tmp_vert_list[i])
+		# 	else:
+		# 		False
+
+		# for i in range( len(tmp_2) )
+
+
+
+		# Length check. length of V1 + V2 = self.verts
+		len_test = len(V1) + len(V2) == vrts_len
+		intersect_test = len( [val for val in V1 if val in V2] ) == 0
+
+		# print "V1: {}".format(V1)
+		# print "V2: {}".format(V2)
+		# print "vrts len: ".format(vrts_len )
+		# print "len_test: {}".format(len_test)
+		# print "inter_test: {}".format(intersect_test)
+
+		if len_test and intersect_test:
+			return (V1, V2)
+		else:
+			return None
+
 
 	def print_adj_mtx():
 		pass
@@ -209,7 +332,4 @@ class Graph():
 		pass
 
 	def is_Euler_cycle():
-		pass
-
-	def is_barpartite():
 		pass
