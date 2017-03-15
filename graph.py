@@ -21,10 +21,14 @@ class Vertex():
 		self.graph.add_vertex(-1, -1, vert=self)
 
 	def __str__(self):
-		return "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
+		return "Vertex: '{}' at ({}, {}) in Graph '{}'".\
+				format(self.label, self.x, self.y, self.graph.name)
 
-	# def __repr__(self):
-	# 	return self.label # "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
+	def __repr__(self):
+		return self.label # "Vertex: '{}' at ({}, {}) in Graph '{}'".format(self.label, self.x, self.y, self.graph.name)
+
+	def __eq__(self, other):
+		return self.label == other.label
 
 	def auto_gen_label(self, method="vtx"):
 		if method == "abc":
@@ -44,8 +48,13 @@ class Vertex():
 	def is_adjacent_to(self, vert):
 		return self.adj_vertices.has_key(vert.label)
 
-	def is_incident_on(self, edge):
-		return self.incd_edges.has_key(edge.label)
+	def is_incident_on(self, *edge):
+		for e in edge:
+			if not self.incd_edges.has_key(e.label):
+				return False
+		return True
+	# def is_incident_on(self, edge):
+	# 	return self.incd_edges.has_key(edge.label)
 
 	def is_isolated(self):
 		return self.incd_edges == {}
@@ -76,7 +85,8 @@ class Edge():
 		self.graph.add_edge(-1,-1,edge=self)
 
 	def __str__(self):
-		return "Edge  : '{}' with vertices ({}, {}) in Graph '{}'".format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
+		return "Edge  : '{}' with vertices ({}, {}) in Graph '{}'".\
+				format(self.label, self.vert_1.label, self.vert_2.label, self.graph.name)
 
 	def auto_gen_label(self, method="edg"):
 		if method == "123":
@@ -224,7 +234,8 @@ class Graph():
 			# Add all of its vertices to V2
 			tmp_v = list(v0.adj_vertices.values())
 			for i in range( len(tmp_v) ):
-				V2.append(tmp_v[i])
+				if tmp_v[i] not in V2:
+					V2.append(tmp_v[i])
 				tmp_2.append( (tmp_v[i], v0) )
 
 			l = 2
@@ -247,8 +258,9 @@ class Graph():
 						for i in range( len(tmp_v) ):
 							if tmp_v[i] is not v[1]:
 								if tmp_v[i] not in V2:
+									# raw_input( "     Adding {} to {}".format(tmp_v[i], V2) )
 									V2.append(tmp_v[i])
-								tmp_2.append( (tmp_v[i], v) )
+								tmp_2.append( (tmp_v[i], v[0]) )
 								
 								# raw_input( "{} will attempt to remove: {} from {}".format(tmp_cnt_2, tmp_v[i], vrts) )
 								if tmp_v[i] in vrts:
@@ -275,8 +287,9 @@ class Graph():
 						for i in range( len(tmp_v) ):
 							if tmp_v[i] is not v[1]:
 								if tmp_v[i] not in V1:
+									# raw_input( "     Adding {} to {}".format(tmp_v[i], V1) )
 									V1.append(tmp_v[i])
-								tmp_1.append( (tmp_v[i], v) )
+								tmp_1.append( (tmp_v[i], v[0]) )
 
 								# raw_input( "{} will attempt to remove: {} from {}".format(tmp_cnt_2, tmp_v[i], vrts) )
 								if tmp_v[i] in vrts:
